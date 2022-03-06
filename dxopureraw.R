@@ -79,14 +79,14 @@ plot(log2(S2), log2(S2/N2), xlim=c(-6,0), ylim=c(0,5),
 lines(log2(S2), log2(S1/N1), col='red')
 
 
-# SNR inc. in dB
+# DR gain in dB
 plot(log2(S2), 20*log10(S2/N2)-20*log10(S1/N1), xlim=c(-6,0), ylim=c(0,10),
      main='DxO PureRAW DR enhacement',
-     xlab='RAW exposure (EV)', ylab='Inc. DR (dB)', col='red')
+     xlab='RAW exposure (EV)', ylab='DR gain (dB)', col='red')
 abline(h=mean(20*log10(S2/N2)-20*log10(S1/N1)), lty=2)
 
-# SNR inc. in EV
+# DR gain in EV
 plot(log2(S2), log2((S2/N2)/(S1/N1)), xlim=c(-6,0), ylim=c(0,1.5),
      main='DxO PureRAW DR enhacement',
-     xlab='RAW exposure (EV)', ylab='Inc. DR (EV)', col='red')
+     xlab='RAW exposure (EV)', ylab='DR gain (EV)', col='red')
 abline(h=mean(log2((S2/N2)/(S1/N1))), lty=2)
