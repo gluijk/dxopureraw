@@ -60,9 +60,10 @@ for (j in 1:24) {
 
 
 # Check S1 vs S2
-plot(S1, S2, type='b')
-plot(S1/S2, ylim=c(0,2))
-abline(h=1, col='red')
+plot(S1, S2, type='b', col='red')
+
+plot(S1/S2, ylim=c(0,2), col='red')
+abline(h=1, lty=2)
 
 
 # SNR gain in dB
@@ -71,18 +72,18 @@ plot(log(S2,2), 20*log10(S2/N2), xlim=c(-6,0), ylim=c(0,30),
 lines(log(S2,2), 20*log10(S1/N1), col='red')
 
 # SNR gain in EV
-plot(log(S2,2), log(S2/N2, 2), xlim=c(-6,0), ylim=c(0,5),
+plot(log2(S2), log2(S2/N2), xlim=c(-6,0), ylim=c(0,5),
      xlab='RAW exposure (EV)', ylab='SNR (EV)')
-lines(log(S2,2), log(S1/N1, 2), col='red')
+lines(log2(S2), log2(S1/N1), col='red')
 
 
 # SNR inc. in dB
-plot(log(S2,2), 20*log10(S2/N2)-20*log10(S1/N1), xlim=c(-6,0), ylim=c(0,10),
+plot(log2(S2), 20*log10(S2/N2)-20*log10(S1/N1), xlim=c(-6,0), ylim=c(0,10),
      xlab='RAW exposure (EV)', ylab='Inc. SNR (dB)', col='red')
 abline(h=mean(20*log10(S2/N2)-20*log10(S1/N1)), lty=2)
 
 # SNR inc. in EV
-plot(log(S2,2), log((S2/N2)/(S1/N1), 2), xlim=c(-6,0), ylim=c(0,1.5),
-     xlab='RAW exposure (EV)', ylab='Inc. SNR (EV)', col='red', type='b',
+plot(log2(S2), log2((S2/N2)/(S1/N1)), xlim=c(-6,0), ylim=c(0,1.5),
+     xlab='RAW exposure (EV)', ylab='Inc. SNR (EV)', col='red',
      main='DxO PureRAW DR enhacement')
-abline(h=mean(log((S2/N2)/(S1/N1), 2)), lty=2)
+abline(h=mean(log2((S2/N2)/(S1/N1))), lty=2)
