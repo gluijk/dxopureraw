@@ -50,12 +50,10 @@ for (j in 1:24) {
     S2[j]=mean(img2[i])
     N1[j]=var(img1[i])^0.5  # N=stdev
     N2[j]=var(img2[i])^0.5
-    tmp=img1[i]
-    tmp=tmp[tmp==0]
-    Ratio1[j]=length(tmp[tmp==0])/length(img1[i])  # never reaches 0
-    tmp=img2[i]
-    tmp=tmp[tmp==0]
-    Ratio2[j]=length(tmp[tmp==0])/length(img2[i])  # never reaches 0
+    tmp=img1[img1==0]
+    Ratio1[j]=length(tmp)/length(img1[i])  # check black clipping
+    tmp=img2[img2==0]
+    Ratio2[j]=length(tmp)/length(img2[i])  # check black clipping
 }
 
 
