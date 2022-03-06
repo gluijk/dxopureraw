@@ -68,22 +68,25 @@ abline(h=1, lty=2)
 
 # SNR gain in dB
 plot(log(S2,2), 20*log10(S2/N2), xlim=c(-6,0), ylim=c(0,30),
-     main='DxO PureRAW SNR enhacement', xlab='RAW exposure (EV)', ylab='SNR (dB)')
+     main='DxO PureRAW SNR enhacement',
+     xlab='RAW exposure (EV)', ylab='SNR (dB)')
 lines(log(S2,2), 20*log10(S1/N1), col='red')
 
 # SNR gain in EV
 plot(log2(S2), log2(S2/N2), xlim=c(-6,0), ylim=c(0,5),
+     main='DxO PureRAW SNR enhacement',
      xlab='RAW exposure (EV)', ylab='SNR (EV)')
 lines(log2(S2), log2(S1/N1), col='red')
 
 
 # SNR inc. in dB
 plot(log2(S2), 20*log10(S2/N2)-20*log10(S1/N1), xlim=c(-6,0), ylim=c(0,10),
-     xlab='RAW exposure (EV)', ylab='Inc. SNR (dB)', col='red')
+     main='DxO PureRAW DR enhacement',
+     xlab='RAW exposure (EV)', ylab='Inc. DR (dB)', col='red')
 abline(h=mean(20*log10(S2/N2)-20*log10(S1/N1)), lty=2)
 
 # SNR inc. in EV
 plot(log2(S2), log2((S2/N2)/(S1/N1)), xlim=c(-6,0), ylim=c(0,1.5),
-     xlab='RAW exposure (EV)', ylab='Inc. SNR (EV)', col='red',
-     main='DxO PureRAW DR enhacement')
+     main='DxO PureRAW DR enhacement',
+     xlab='RAW exposure (EV)', ylab='Inc. DR (EV)', col='red')
 abline(h=mean(log2((S2/N2)/(S1/N1))), lty=2)
