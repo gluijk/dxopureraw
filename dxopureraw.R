@@ -42,18 +42,44 @@ Ratio1=S1
 Ratio2=S1
 
 # Loop 24 patches
+par(mfrow=c(4,6))
+BREAKS=90
 for (j in 1:24) {
     i=which(row(img1)>=OFFY & row(img1)<=ALTO-OFFY &
             col(img1)>=ANCHO*(j-1)+OFFX & col(img1)<=ANCHO*j-OFFX)
-    hist(img1[i], breaks=100)
+    
+    # Check for black clipping
+    tmp=img1[img1==0]
+    Ratio1[j]=length(tmp)/length(img1[i])  
+    tmp=img2[img2==0]
+    Ratio2[j]=length(tmp)/length(img2[i])
+    
+    # Plot histograms before/after
+    xmin=min(min(img1[i]), min(img2[i]))
+    xmax=max(max(img1[i]), max(img2[i]))
+    xrange=seq(from=xmin, to=xmax, length.out=BREAKS)
+    
+    h1=hist(img1[i], breaks=xrange, plot=FALSE)
+    h2=hist(img2[i], breaks=xrange, plot=FALSE)
+    
+    ymax=max(h1$counts, h2$counts)
+    h1$counts=h1$counts/ymax  # normalize histograms to 0..1
+    h2$counts=h2$counts/ymax
+    
+    plot(h1, main=paste0('patch ',j), breaks=xrange, ylim=c(0,1),
+         xlab='', ylab='', axes=FALSE,
+         col=rgb(0.8, 0.8, 0.8, 1/1), border=rgb(0.8, 0.8, 0.8,0))
+    plot(h2, breaks=xrange,
+         xlab='', ylab='',
+         col=rgb(1,0,0,0.3), border=rgb(1,0,0,0), add=TRUE)
+    axis(side=1)  # only x axis
+    abline(v=0)
+    
+    # Signal/noise calculations
     S1[j]=mean(img1[i])  # S=mean
     S2[j]=mean(img2[i])
     N1[j]=var(img1[i])^0.5  # N=stdev
     N2[j]=var(img2[i])^0.5
-    tmp=img1[img1==0]
-    Ratio1[j]=length(tmp)/length(img1[i])  # check black clipping
-    tmp=img2[img2==0]
-    Ratio2[j]=length(tmp)/length(img2[i])  # check black clipping
 }
 
 
