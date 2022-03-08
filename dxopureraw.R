@@ -1,4 +1,4 @@
-# DxO PureRAW. Noise reduction based on Neural Networks
+# DxO PureRAW. Noise reduction based on neural networks
 # www.overfitting.net
 # https://www.overfitting.net/2022/03/dxo-pureraw-reduccion-de-ruido-con.html
 
