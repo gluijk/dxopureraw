@@ -18,31 +18,30 @@ MAX=max(img1)
 img1=img1-BLACK/SAT  # linearize to 0..1 preserving negative values
 img1=img1*MAX/max(img1)
 
-
 # dcraw -v -r 1 1 1 1 -o 0 -4 -T iso25600dxo.dng
 img2=readTIFF("iso25600dxo.tiff", native=F, convert=F)
 
 # dcraw -v -r 1 1 1 1 -o 0 -4 -T iso25600topaz.dng
 # img2=readTIFF("iso25600topaz.tiff", native=F, convert=F)
 
-
 img1=img1[13:4012, 13:6012,]  # crop area (13,13)-(6012,4012)
 img1=img1[1800:2119, 886:4996, 2]  # crop G patches
 img2=img2[1800:2119, 886:4996, 2]  # crop G patches
 
-NPATCHES=24
-ALTO=nrow(img1)
-ANCHO=ncol(img1)/NPATCHES
-OFFX=20
-OFFY=5
 
-# mark 24 patches
+# S/N values
+NPATCHES=24
 S1=array(0,NPATCHES)
 N1=S1
 S2=S1
 N2=S1
 
 # Loop 24 patches
+ALTO=nrow(img1)
+ANCHO=ncol(img1)/NPATCHES
+OFFX=20
+OFFY=5
+
 par(mfrow=c(4,6))
 BREAKS=90
 for (j in 1:NPATCHES) {
@@ -92,7 +91,6 @@ plot(log2(S2), 20*log10(S2/N2), xlim=c(-6,0), ylim=c(0,30),
      xlab='RAW exposure (EV)', ylab='SNR (dB)')
 lines(log2(S1), 20*log10(S1/N1), col='red')
 abline(h=12, lty=2)
-axis(side=1, at=seq(-8,5))
 
 # SNR curves in EV
 plot(log2(S2), log2(S2/N2), xlim=c(-6,0), ylim=c(0,5),
@@ -101,7 +99,6 @@ plot(log2(S2), log2(S2/N2), xlim=c(-6,0), ylim=c(0,5),
 lines(log2(S1), log2(S1/N1), col='red')
 # abline(h=0:5, v=-9:0, col='gray', lty=2)
 abline(h=2, lty=2)
-axis(side=c(1,2), at=seq(-8,5))
 
 
 # SNR gain in dB
