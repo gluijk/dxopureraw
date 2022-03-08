@@ -15,7 +15,7 @@ img1=readTIFF("iso25600_notrunc.tiff", native=F, convert=F)
 BLACK=512
 SAT=16383
 MAX=max(img1)
-img1=img1-BLACK/SAT
+img1=img1-BLACK/SAT  # linearize to 0..1 preserving negative values
 img1=img1*MAX/max(img1)
 
 
