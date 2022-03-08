@@ -1,2 +1,2 @@
 # dxopureraw
-DxO PureRAW. Noise reduction based on Neural Networks
+DxO PureRAW. Noise reduction based on neural networks
