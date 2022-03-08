@@ -14,8 +14,10 @@ img1=readTIFF("iso25600_trunc.tiff", native=F, convert=F)
 img1=readTIFF("iso25600_notrunc.tiff", native=F, convert=F)
 BLACK=512
 SAT=16383
+MAX=max(img1)
 img1=img1-BLACK/SAT
-img1=img1/max(img1)
+img1=img1*MAX/max(img1)
+
 
 # dcraw -v -r 1 1 1 1 -o 0 -4 -T iso25600dxo.dng
 img2=readTIFF("iso25600dxo.tiff", native=F, convert=F)
@@ -28,32 +30,25 @@ img1=img1[13:4012, 13:6012,]  # crop area (13,13)-(6012,4012)
 img1=img1[1800:2119, 886:4996, 2]  # crop G patches
 img2=img2[1800:2119, 886:4996, 2]  # crop G patches
 
+NPATCHES=24
 ALTO=nrow(img1)
-ANCHO=ncol(img1)/24
+ANCHO=ncol(img1)/NPATCHES
 OFFX=20
 OFFY=5
 
 # mark 24 patches
-S1=array(0,24)
+S1=array(0,NPATCHES)
 N1=S1
 S2=S1
 N2=S1
-Ratio1=S1
-Ratio2=S1
 
 # Loop 24 patches
 par(mfrow=c(4,6))
 BREAKS=90
-for (j in 1:24) {
+for (j in 1:NPATCHES) {
     i=which(row(img1)>=OFFY & row(img1)<=ALTO-OFFY &
             col(img1)>=ANCHO*(j-1)+OFFX & col(img1)<=ANCHO*j-OFFX)
-    
-    # Check for black clipping
-    tmp=img1[img1==0]
-    Ratio1[j]=length(tmp)/length(img1[i])  
-    tmp=img2[img2==0]
-    Ratio2[j]=length(tmp)/length(img2[i])
-    
+
     # Plot histograms before/after
     xmin=min(min(img1[i]), min(img2[i]))
     xmax=max(max(img1[i]), max(img2[i]))
@@ -82,35 +77,41 @@ for (j in 1:24) {
     N2[j]=var(img2[i])^0.5
 }
 
+dev.off()
 
 # Check S1 vs S2
-plot(S1, S2, type='b', col='red')
+plot(log2(S1), log2(S2), xlim=c(-7,0), ylim=c(-7,0), col='red',
+     main='S1 vs S2',
+     xlab='S1 RAW exposure (EV)', ylab='S2 RAW exposure (EV)')
+lines(c(-7,0), c(-7,0), col='gray')
 
-plot(S1/S2, ylim=c(0,2), col='red')
-abline(h=1, lty=2)
 
-
-# SNR gain in dB
-plot(log(S2,2), 20*log10(S2/N2), xlim=c(-6,0), ylim=c(0,30),
+# SNR cuves in dB
+plot(log2(S2), 20*log10(S2/N2), xlim=c(-6,0), ylim=c(0,30),
      main='DxO PureRAW SNR enhacement',
      xlab='RAW exposure (EV)', ylab='SNR (dB)')
-lines(log(S2,2), 20*log10(S1/N1), col='red')
+lines(log2(S1), 20*log10(S1/N1), col='red')
+abline(h=12, lty=2)
+axis(side=1, at=seq(-8,5))
 
-# SNR gain in EV
+# SNR curves in EV
 plot(log2(S2), log2(S2/N2), xlim=c(-6,0), ylim=c(0,5),
      main='DxO PureRAW SNR enhacement',
      xlab='RAW exposure (EV)', ylab='SNR (EV)')
-lines(log2(S2), log2(S1/N1), col='red')
+lines(log2(S1), log2(S1/N1), col='red')
+# abline(h=0:5, v=-9:0, col='gray', lty=2)
+abline(h=2, lty=2)
+axis(side=c(1,2), at=seq(-8,5))
 
 
-# DR gain in dB
-plot(log2(S2), 20*log10(S2/N2)-20*log10(S1/N1), xlim=c(-6,0), ylim=c(0,10),
-     main='DxO PureRAW DR enhacement',
+# SNR gain in dB
+plot(log2(S2), 20*log10((S2/N2)/(S1/N1)), xlim=c(-6,0), ylim=c(0,10),
+     main='DxO PureRAW SNR enhacement',
      xlab='RAW exposure (EV)', ylab='DR gain (dB)', col='red')
-abline(h=mean(20*log10(S2/N2)-20*log10(S1/N1)), lty=2)
+abline(h=mean(20*log10((S2/N2)/(S1/N1))), lty=2)
 
-# DR gain in EV
+# SNR gain in EV
 plot(log2(S2), log2((S2/N2)/(S1/N1)), xlim=c(-6,0), ylim=c(0,1.5),
-     main='DxO PureRAW DR enhacement',
+     main='DxO PureRAW SNR enhacement',
      xlab='RAW exposure (EV)', ylab='DR gain (EV)', col='red')
 abline(h=mean(log2((S2/N2)/(S1/N1))), lty=2)
