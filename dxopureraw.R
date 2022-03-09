@@ -78,7 +78,7 @@ for (j in 1:NPATCHES) {
 
 dev.off()
 
-# Check S1 vs S2
+# Check S1 vs S2: S2 slightly higher than S1 (we assume S1 correct)
 plot(log2(S1), log2(S2), xlim=c(-7,0), ylim=c(-7,0), col='red',
      main='S1 vs S2',
      xlab='S1 RAW exposure (EV)', ylab='S2 RAW exposure (EV)')
@@ -86,14 +86,14 @@ lines(c(-7,0), c(-7,0), col='gray')
 
 
 # SNR cuves in dB
-plot(log2(S2), 20*log10(S2/N2), xlim=c(-6,0), ylim=c(0,30),
+plot(log2(S1), 20*log10(S2/N2), xlim=c(-6,0), ylim=c(0,30),
      main='DxO PureRAW SNR enhacement',
      xlab='RAW exposure (EV)', ylab='SNR (dB)')
 lines(log2(S1), 20*log10(S1/N1), col='red')
 abline(h=12, lty=2)
 
 # SNR curves in EV
-plot(log2(S2), log2(S2/N2), xlim=c(-6,0), ylim=c(0,5),
+plot(log2(S1), log2(S2/N2), xlim=c(-6,0), ylim=c(0,5),
      main='DxO PureRAW SNR enhacement',
      xlab='RAW exposure (EV)', ylab='SNR (EV)')
 lines(log2(S1), log2(S1/N1), col='red')
@@ -102,13 +102,13 @@ abline(h=2, lty=2)
 
 
 # SNR gain in dB
-plot(log2(S2), 20*log10((S2/N2)/(S1/N1)), xlim=c(-6,0), ylim=c(0,10),
+plot(log2(S1), 20*log10((S2/N2)/(S1/N1)), xlim=c(-6,0), ylim=c(0,10),
      main='DxO PureRAW SNR enhacement',
      xlab='RAW exposure (EV)', ylab='DR gain (dB)', col='red')
 abline(h=mean(20*log10((S2/N2)/(S1/N1))), lty=2)
 
 # SNR gain in EV
-plot(log2(S2), log2((S2/N2)/(S1/N1)), xlim=c(-6,0), ylim=c(0,1.5),
+plot(log2(S1), log2((S2/N2)/(S1/N1)), xlim=c(-6,0), ylim=c(0,1.5),
      main='DxO PureRAW SNR enhacement',
      xlab='RAW exposure (EV)', ylab='DR gain (EV)', col='red')
 abline(h=mean(log2((S2/N2)/(S1/N1))), lty=2)
