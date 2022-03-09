@@ -75,8 +75,8 @@ for (j in 1:NPATCHES) {
     N1[j]=var(img1[i])^0.5  # N=stdev
     N2[j]=var(img2[i])^0.5
 }
-
 dev.off()
+
 
 # Check S1 vs S2: S2 slightly higher than S1 (we assume S1 correct)
 plot(log2(S1), log2(S2), xlim=c(-7,0), ylim=c(-7,0), col='red',
