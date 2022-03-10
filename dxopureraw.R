@@ -90,7 +90,7 @@ plot(log2(S1), 20*log10(S2/N2), xlim=c(-6,0), ylim=c(0,30),
      main='DxO PureRAW SNR enhancement',
      xlab='RAW exposure (EV)', ylab='SNR (dB)')
 lines(log2(S1), 20*log10(S1/N1), col='red')
-abline(h=12, lty=2)
+abline(h=12, v=0, lty=2)
 
 # SNR curves in EV
 plot(log2(S1), log2(S2/N2), xlim=c(-6,0), ylim=c(0,5),
