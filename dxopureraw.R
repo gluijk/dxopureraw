@@ -79,7 +79,7 @@ dev.off()
 
 
 # Check S1 vs S2: S2 slightly higher than S1 (we assume S1 correct)
-plot(log2(S1), log2(S2), xlim=c(-7,0), ylim=c(-7,0), col='red',
+plot(log2(S1), log2(S2), xlim=c(-6,0), ylim=c(-6,0), col='red',
      main='S1 vs S2',
      xlab='RAW exposure (EV)', ylab='DxO PureRAW DNG exposure (EV)')
 lines(c(-7,0), c(-7,0), col='gray')
@@ -97,7 +97,6 @@ plot(log2(S1), log2(S2/N2), xlim=c(-6,0), ylim=c(0,5),
      main='DxO PureRAW SNR enhancement',
      xlab='RAW exposure (EV)', ylab='SNR (EV)')
 lines(log2(S1), log2(S1/N1), col='red')
-# abline(h=0:5, v=-9:0, col='gray', lty=2)
 abline(h=2, lty=2)
 
 
