@@ -81,7 +81,7 @@ dev.off()
 # Check S1 vs S2: S2 slightly higher than S1 (we assume S1 correct)
 plot(log2(S1), log2(S2), xlim=c(-7,0), ylim=c(-7,0), col='red',
      main='S1 vs S2',
-     xlab='S1 RAW exposure (EV)', ylab='S2 RAW exposure (EV)')
+     xlab='RAW exposure (EV)', ylab='DxO PureRAW DNG exposure (EV)')
 lines(c(-7,0), c(-7,0), col='gray')
 
 
